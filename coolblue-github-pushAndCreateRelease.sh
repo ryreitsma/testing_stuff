@@ -40,7 +40,7 @@ git commit -m "Release of ${repo} version ${version}"
 echo "Pushing to public repository"
 git push --progress
 
-commit_sha="NOT IN HERE"
+commit_sha="aa3578ef78b6114141364ac77e59a8f3df8ad162"
 releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' ${version} ${commit_sha} ${version} ${version}`
 owner="ryreitsma"
 
