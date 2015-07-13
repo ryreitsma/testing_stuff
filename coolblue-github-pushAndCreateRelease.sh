@@ -45,7 +45,7 @@ releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","bo
 owner="ryreitsma"
 
 echo "Creating release tag ${version} on master"
-curl -I --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token}
+curl --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token} -v
 
 echo "Version ${version} of ${repo} released to public repository"
 
