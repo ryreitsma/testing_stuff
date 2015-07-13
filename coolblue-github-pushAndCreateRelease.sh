@@ -41,6 +41,7 @@ echo "Pushing to public repository"
 git push --progress
 
 commit_sha=`git rev-parse HEAD`
+echo ${commit_sha}
 releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' ${version} ${commit_sha} ${version} ${version}`
 owner="ryreitsma"
 
