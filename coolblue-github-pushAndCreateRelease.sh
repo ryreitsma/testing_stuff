@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+
 while getopts ":e:g:r:v:t:" opt ; do
     case ${opt} in
         e)
@@ -45,7 +45,7 @@ releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","bo
 owner="ryreitsma"
 
 echo "Creating release tag ${version} on master"
-curl --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token} -i -f
+curl --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token} -f || exit 1
 
 echo "Version ${version} of ${repo} released to public repository"
 
