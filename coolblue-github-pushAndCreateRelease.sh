@@ -43,6 +43,7 @@ git push --progress
 commit_sha=`git rev-parse HEAD`
 releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' "${version}" "${commit_sha}" "${version}" "${version}"`
 owner="ryreitsma"
+echo ${releaseJSON}
 
 echo "Creating release tag ${version} on master"
 curl --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token} -f || exit 1
