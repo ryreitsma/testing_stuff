@@ -40,7 +40,7 @@ git commit -m "Release of ${repo} version ${version}"
 echo "Pushing to public repository"
 git push --progress
 
-commit_sha=`git rev-parse HEAD`
+commit_sha="NOT IN HERE"
 releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' ${version} ${commit_sha} ${version} ${version}`
 owner="ryreitsma"
 
