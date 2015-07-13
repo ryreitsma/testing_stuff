@@ -28,9 +28,6 @@ while getopts ":e:g:r:v:t:" opt ; do
     esac
 done
 
-releaseJSON=`printf '{"tag_name": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' ${version} ${version} ${version}`
-owner="ryreitsma"
-
 echo "Set local git configuration"
 git config user.name "${gituser}"
 git config user.email "${gitemail}"
@@ -43,11 +40,9 @@ git commit -m "Release of ${repo} version ${version}"
 echo "Pushing to public repository"
 git push --progress
 
-echo "Creating release tag ${version} on master"
-git tag -a ${version} -m "Release of version ${version}"
-
-echo "Push release tag to public repository"
-git push --tags
+commit_sha=`git rev-parse HEAD`
+releaseJSON=`printf '{"tag_name": "%s","target_commitish": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' ${version} ${commit_sha} ${version} ${version}`
+owner="ryreitsma"
 
 echo "Creating release tag ${version} on master"
 curl --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token}
