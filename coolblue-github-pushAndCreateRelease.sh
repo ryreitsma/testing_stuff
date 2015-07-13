@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts ":e:g:r:v:" opt ; do
+while getopts ":e:g:r:v:t:" opt ; do
     case ${opt} in
         e)
             gitemail=${OPTARG}
@@ -10,6 +10,9 @@ while getopts ":e:g:r:v:" opt ; do
             ;;
         r)
             repo=${OPTARG}
+            ;;
+        t)
+            token=${OPTARG}
             ;;
         v)
             version=${OPTARG}
@@ -26,7 +29,7 @@ while getopts ":e:g:r:v:" opt ; do
 done
 
 releaseJSON=`printf '{"tag_name": "%s","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' ${version} ${version} ${version}`
-owner="coolblue-development"
+owner="ryreitsma"
 
 echo "Set local git configuration"
 git config user.name "${gituser}"
@@ -43,7 +46,13 @@ git push --progress
 echo "Creating release tag ${version} on master"
 git tag -a ${version} -m "Release of version ${version}"
 
-echo "Push tags to public repository"
+echo "Push release tag to public repository"
 git push --tags
 
+echo "Creating release tag ${version} on master"
+curl --data "${releaseJSON}" https://api.github.com/repos/${owner}/${repo}/releases?access_token=${token}
+
 echo "Version ${version} of ${repo} released to public repository"
+
+echo "Updating local directory with tag"
+git pull
