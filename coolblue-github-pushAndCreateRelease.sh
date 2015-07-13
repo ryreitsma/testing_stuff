@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 while getopts ":e:g:r:v:t:" opt ; do
     case ${opt} in
         e)
